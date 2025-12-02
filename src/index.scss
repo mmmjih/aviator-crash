@@ -111,8 +111,8 @@ body {
   position: relative;
   width: 100% !important;
   height: 100%;
-  padding-top: 38px;
-  background: #0E0E0E;
+  padding-top: 40px;
+  background: #000;
 }
 
 code {
@@ -125,7 +125,7 @@ code {
 }
 
 .header {
-  height: 38px;
+  height: 40px;
   position: fixed;
   width: 100%;
   top: 0;
@@ -133,7 +133,7 @@ code {
   z-index: 840;
 
   .header-container {
-    background-color: #1b1c1d;
+    background-color: #111;
     height: 100% !important;
     width: inherit;
     display: flex;

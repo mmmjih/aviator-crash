@@ -1,6 +1,36 @@
 $normalBg: #2c2d30;
 $whiteBg: #868b8d;
 
+/* Banner */
+.banner {
+  height: 40px;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  width: 100%;
+
+  .logo-img {
+    height: 28px;
+    width: auto;
+  }
+
+  .balance {
+    font-size: 15px;
+    font-weight: 800;
+
+    .amount {
+      color: #0f0;
+    }
+
+    .currency {
+      color: #666;
+    }
+  }
+}
+
 .header-first {
   display: flex;
   gap: 20px;

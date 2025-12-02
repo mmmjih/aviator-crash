@@ -1,46 +1,70 @@
 import React from "react";
-// import { useCrashContext } from "./context";
 import Context from "../../context";
 
 export default function History() {
   const { history } = React.useContext(Context);
-
   const [showHistory, setShowHistory] = React.useState(false);
+  const historyItemsContainerRef = React.useRef<HTMLDivElement>(null);
+
+  React.useEffect(() => {
+    if (historyItemsContainerRef.current && history.length > 0) {
+      const container = historyItemsContainerRef.current;
+      const items = container.children;
+      let totalWidth = 0;
+      for (let i = 0; i < items.length; i++) {
+        totalWidth += (items[i] as HTMLElement).offsetWidth + 30;
+      }
+      const maxWidth = container.parentElement?.offsetWidth || 0;
+      if (totalWidth > maxWidth - 40) {
+        const shift = totalWidth - maxWidth + 40;
+        container.style.transform = `translateX(-${shift}px)`;
+      }
+    }
+  }, [history]);
 
   return (
-    <div className="stats">
-      <div className="payouts-wrapper">
-        <div className="payouts-block">
-          {!!history.length && history.map((item, key) => (
-            <div key={key} className="payout">
-              <div className={`item opacity-${100 - 2 * key} ${Number(item) < 2 ? "blue" : Number(item) < 10 ? "purple" : "big"}`}>{Number(item).toFixed(2)}x</div>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="button-block" onClick={() => setShowHistory(!showHistory)}>
-        <div className="button dropdown-toggle">
-          <div className="trigger">
-            <div className="history-icon"></div>
-            <div className={`dd-icon ${showHistory ? "up" : ""}`}></div>
+    <>
+      <div className="history-bar">
+        <div className="history-content">
+          <div className="history-items-container" ref={historyItemsContainerRef}>
+            {history.slice().reverse().map((item, key) => {
+              const num = parseFloat(item);
+              const color = num < 2 ? '#00ffff' : num <= 10 ? '#c80000' : '#ff69b4';
+              return (
+                <span key={key} className="history-item" style={{ color }}>
+                  {Number(item).toFixed(2)}x
+                </span>
+              );
+            })}
           </div>
         </div>
+        <i 
+          className="fas fa-clock-rotate-left history-icon" 
+          onClick={() => setShowHistory(!showHistory)}
+        ></i>
       </div>
-      {!!showHistory && <div className="dropdown-menu">
-        <div className="wrapper">
-          <div className="header-2">
-            <div> Round history </div>
-          </div>
-          <div className="payouts-block">
-            {!!history.length && history.map((item, key) => (key < 123 &&
-              <div key={key} className="payout">
-                <div className={`bubble-multiplier ${Number(item) < 2 ? "blue" : Number(item) < 10 ? "purple" : "big"}`}>{Number(item).toFixed(2)}x</div>
-              </div>
-            ))}
-          </div>
+
+      <div className={`history-popup ${showHistory ? 'show' : ''}`}>
+        <div className="popup-header">
+          <span>Crash History</span>
+          <button className="close-popup" onClick={() => setShowHistory(false)}>x</button>
+        </div>
+        <div className="popup-body">
+          {history.length === 0 ? (
+            <div style={{ color: '#666', fontSize: '12px' }}>No rounds yet</div>
+          ) : (
+            history.slice().reverse().map((item, key) => {
+              const num = parseFloat(item);
+              const className = num < 2 ? 'low' : num <= 10 ? 'mid' : 'high';
+              return (
+                <div key={key} className={`popup-item ${className}`}>
+                  {Number(item).toFixed(2)}x
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
-      }
-    </div>
+    </>
   );
 }

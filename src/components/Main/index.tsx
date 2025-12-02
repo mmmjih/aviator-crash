@@ -8,16 +8,11 @@ export default function Main() {
   const [addBetPanel, setAddBetPanel] = React.useState(true);
   return (
     <div className="game-play">
-      <div className="result-history">
-        <History />
-      </div>
+      <History />
       <div className="stage-board">
         <div className="play-board-wrapper">
           <div className="stage-canvas">
             <Crash />
-          </div>
-          <div className="dom-container">
-            <div className="fun-mode">FUN MODE</div>
           </div>
         </div>
       </div>

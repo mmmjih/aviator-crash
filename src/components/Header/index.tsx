@@ -17,33 +17,18 @@ export default function Header() {
 
   return (
     <div className={`header flex-none items-center ${msgTab && 'chat-size'}`}>
-      <div className="header-container">
-        <div className="header-first">
-          <div className="logo-container">
-            <img src={logo} alt="logo" className="logo"></img>
-          </div>
-
-          <button className="howto" onClick={() => setHowto("short")}>
-            <div className="help-logo"></div>
-            <div className="help-msg">How to play ?</div>
-          </button>
+      <div className="banner">
+        <div className="logo-container">
+          <img src={logo} alt="Logo" className="logo-img"></img>
         </div>
-        <div className="second-block">
-          <div className="d-flex">
-            <div className="balance">
-              <span className="amount">
-                {Number(userInfo.balance).toFixed(2)}{" "}
-              </span>
-              <span className="currency">
-                &nbsp;
-                {`${userInfo?.currency ? userInfo?.currency : "INR"
-                  }`}
-              </span>
-            </div>
-            <div>
-              <SettingsMenu setHowto={setHowto} />
-            </div>
-          </div>
+        <div className="balance">
+          <span className="amount">{Number(userInfo.balance).toFixed(2)}</span>
+          <span className="currency">
+            {" "}{userInfo?.currency ? userInfo?.currency : "BDT"}
+          </span>
+        </div>
+        <div>
+          <SettingsMenu setHowto={setHowto} />
         </div>
       </div>
       {howto === "short" && (
